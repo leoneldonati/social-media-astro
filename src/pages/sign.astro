@@ -3,31 +3,68 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-  <section>
+  <section
+    class=""
+  >
     <h1>
       Join to <span>Ask!</span>
     </h1>
 
-    <h2>
-      Ask, debate and share everything you feel!
-    </h2>
-
-
+    <h2>Ask, debate and share everything you feel!</h2>
 
     <form>
-      <label for="">
+      <label for="avatar">
+        <input type="file" accept="image/*" id="avatar" name="avatar" />
+      </label>
+
+      <div>
+        <label for="name">
+          <input type="text" id="name" name="name" placeholder="John" />
+        </label>
+
+        <label for="lastname">
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            placeholder="Oxford"
+          />
+        </label>
+      </div>
+
+      <label for="username">
         <input
-          type="file"
-          accept="image/*"
-          id="avatar"
-          name="avatar"
-          
-        >
+          type="text"
+          id="username"
+          name="username"
+          placeholder="johnoxford"
+        />
       </label>
 
-      <label for="">
-
+      <label for="email">
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="johnoxford@mydomain.com"
+        />
       </label>
+
+      <label for="password">
+        <input type="text" name="password" id="password" placeholder="********"/>
+      </label>
+
+      <label for="bio">
+        <textarea name="bio" id="bio"></textarea>
+      </label>
+
+      <label for="date">
+        <input type="date" name="date" id="date">
+      </label>
+
+      <button type="submit">
+        sign up
+      </button>
     </form>
   </section>
 </Layout>

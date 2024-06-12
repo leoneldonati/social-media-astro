@@ -1,33 +1,48 @@
 ---
-
 interface Props {
   page?: string;
   description?: string;
 }
 
-const {
-  page,
-  description
-} = Astro.props
-
-
+const { page, description } = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
     <!-- SEO -->
-     
-		<title>Ask! - {page}</title>
-	</head>
-	<body>
+
+    <title>Ask! - {page}</title>
+  </head>
+  <body>
     <slot />
-	</body>
+  </body>
 </html>
 
-<script>
+<style is:global>
+	/* GLOBAL VARIABLES */
+  :root {
+    --color_shadow: #121414;
+    --color_boxes: rgba(200, 200, 200, 0.4);
+    --color_bg: rgba(260, 260, 260, 1);
+    --color_accent: #7c29db;
+    --color_text_dark: #000;
+    --color_text_light: #fff;
 
-</script>
+    --border_size: 0.5em;
+    --padding_boxes: 0.3em;
+    --font_size: 1.15em;
+  }
+
+	/* RESET */
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	*, *::after, *::before {
+		box-sizing: border-box;
+	}
+</style>
