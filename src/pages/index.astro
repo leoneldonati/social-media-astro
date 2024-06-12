@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { authStore } from "../stores/auth";
+
+if (!authStore.get().isAuth) return Astro.redirect('/login')
+---
+
+<Layout>
+	<section>
+		HOME
+	</section>
+</Layout>
