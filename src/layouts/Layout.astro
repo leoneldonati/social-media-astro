@@ -23,26 +23,55 @@ const { page, description } = Astro.props;
 </html>
 
 <style is:global>
-	/* GLOBAL VARIABLES */
+  /* GLOBAL VARIABLES */
   :root {
-    --color_shadow: #121414;
-    --color_boxes: rgba(200, 200, 200, 0.4);
-    --color_bg: rgba(260, 260, 260, 1);
-    --color_accent: #7c29db;
-    --color_text_dark: #000;
-    --color_text_light: #fff;
+    --color_accent: #FFA07A;
+    --color_secondary: #C0C0C0;
 
     --border_size: 0.5em;
-    --padding_boxes: 0.3em;
-    --font_size: 1.15em;
+    --padding_boxes: 0.8em;
   }
 
-	/* RESET */
-	* {
-		margin: 0;
-		padding: 0;
-	}
-	*, *::after, *::before {
-		box-sizing: border-box;
-	}
+  /* RESET */
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+  body {
+    min-height: 100dvh;
+  }
+  input,
+  button,
+  textarea {
+    font: inherit;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  h1,
+  h2 {
+    text-wrap: balance;
+  }
+  img,
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+  /* reduce animations if user wants */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+      transition: none;
+    }
+  }
 </style>

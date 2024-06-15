@@ -3,68 +3,111 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-  <section
-    class=""
-  >
-    <h1>
+  <section class="sign">
+    <h1 class="sign__h1">
       Join to <span>Ask!</span>
     </h1>
 
-    <h2>Ask, debate and share everything you feel!</h2>
+    <h2 class="sign__h2">Ask, debate and share everything you feel!</h2>
 
-    <form>
-      <label for="avatar">
-        <input type="file" accept="image/*" id="avatar" name="avatar" />
+    <form class="sign__form">
+      <label for="avatar" class="sign__label--avatar">
+        <input type="file" accept="image/*" id="avatar" name="avatar" hidden />
       </label>
 
-      <div>
-        <label for="name">
-          <input type="text" id="name" name="name" placeholder="John" />
+      <div class="sign_container--names">
+        <label for="name" class="sign__label">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="John"
+            class="sign__input"
+          />
         </label>
 
-        <label for="lastname">
+        <label for="lastname" class="sign__label">
           <input
             type="text"
             id="lastname"
             name="lastname"
             placeholder="Oxford"
+            class="sign__input"
           />
         </label>
       </div>
 
-      <label for="username">
+      <label for="username" class="sign__label">
         <input
           type="text"
           id="username"
           name="username"
           placeholder="johnoxford"
+          class="sign__input"
         />
       </label>
 
-      <label for="email">
+      <label for="email" class="sign__label">
         <input
           type="email"
           name="email"
           id="email"
           placeholder="johnoxford@mydomain.com"
+          class="sign__input"
         />
       </label>
 
-      <label for="password">
-        <input type="text" name="password" id="password" placeholder="********"/>
+      <label for="password" class="sign__label">
+        <input
+          type="text"
+          name="password"
+          id="password"
+          placeholder="********"
+          class="sign__input"
+        />
       </label>
 
-      <label for="bio">
-        <textarea name="bio" id="bio"></textarea>
+      <label for="bio" class="sign__label">
+        <textarea
+          name="bio"
+          id="bio"
+          placeholder="This is my bio."
+          class="sign__input--bio"></textarea>
       </label>
 
-      <label for="date">
-        <input type="date" name="date" id="date">
+      <label for="date" class="sign__label">
+        <input type="date" name="date" id="date" class="sign__input" />
       </label>
 
-      <button type="submit">
-        sign up
-      </button>
+      <button type="submit" class="sign__button"> sign up </button>
     </form>
   </section>
 </Layout>
+
+<style>
+  .sign {
+    min-height: 100dvh;
+  }
+  .sign__h1 {
+    font-size: xx-large;
+  }
+  .sign__h2 {
+
+  }
+  .sign__form {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--color_secondary);
+    border-radius: var(--border_size);
+    padding: var(--padding_boxes);
+    
+  }
+  .sign__container--names {}
+  .sign__label--avatar {}
+  .sign__label {}
+  .sign__input {}
+  .sign__input--bio {}
+  .sign__button {}
+</style>
