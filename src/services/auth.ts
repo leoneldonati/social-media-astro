@@ -13,6 +13,7 @@ async function signUp(payload: FormData) {
       }
     }
 
+    console.log(result)
     return {
       hasSigned: true
     }

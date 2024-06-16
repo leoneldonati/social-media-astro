@@ -33,8 +33,8 @@ async function post(endpoint: string, payload: FormData) {
     const response = await fetch(`${serverHost}/v${apiVersion}/${endpoint}`, {
       ...FETCH_OPTIONS,
       body: payload,
-      method: 'POST'
-    })
+      method: 'POST',
+    })  
 
     return {
       ok: response.ok,
