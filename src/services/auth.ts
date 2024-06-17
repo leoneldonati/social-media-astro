@@ -12,8 +12,6 @@ async function signUp(payload: FormData) {
         hasSigned: false
       }
     }
-
-    console.log(result)
     return {
       hasSigned: true
     }
