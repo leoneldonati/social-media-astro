@@ -1,24 +1,29 @@
 ---
+import { post } from "../helpers/fetch";
 import Layout from "../layouts/Layout.astro";
-import { IconBrandGoogle, IconBrandInstagram } from '@tabler/icons-react'
-import { logIn } from "../services/auth";
+import { IconBrandGoogle, IconBrandInstagram } from "@tabler/icons-react";
+import { authStore } from "../stores/auth";
 
 if (Astro.request.method === 'POST') {
+
   const form = await Astro.request.formData()
 
-  const { hasLogged } = await logIn(form)
+  const { headers, ok, data } = await post('auth?type=login', form)
 
-  if (hasLogged) return Astro.redirect('/')
+  if (ok) {
+    const sessionString = headers?.get('set-cookie')?.match(/session=([^;]+);/)![1];
+  
+    Astro.cookies.set('session', sessionString!)
+    
+    authStore.set({ isAuth: true, userLogged: data, errors: null })
+    
+    return Astro.redirect('/')
+  }
 }
 ---
 
-<Layout
-page="Login"
-description=""
->
-  <section 
-    class="login"
-  >
+<Layout page="Login" description="">
+  <section class="login">
     <h1 class="login__h1">
       Login into <span transition:name="ask">Ask!</span> and share.
     </h1>
@@ -27,61 +32,53 @@ description=""
       The web in a <span>nutshell.</span>
     </h2>
 
-
     <form method="post" class="login__form" transition:name="form">
       <label for="email" class="login__label" transition:name="email">
-        <span>
-          Email
-        </span>
-        <input class="login__input" type="email" autofocus name="email" id="email" placeholder="example@example.com">
+        <span> Email </span>
+        <input
+          class="login__input"
+          type="email"
+          autofocus
+          name="email"
+          id="email"
+          placeholder="example@example.com"
+        />
       </label>
-      
+
       <label for="password" class="login__label" transition:name="password">
-        <span>
-          Password
-        </span>
-        <input class="login__input" type="password" name="password" id="password" placeholder="*************">
+        <span> Password </span>
+        <input
+          class="login__input"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="*************"
+        />
       </label>
 
-
-      <div
-        class="login__oAuth"
-      >
+      <div class="login__oAuth">
         <p>Or login with...</p>
 
-        <div
-        class="login__oAuth__container"
-        >
-          <button
-            title="Login with Google"
-            class="disabled"
-          >
+        <div class="login__oAuth__container">
+          <button title="Login with Google" class="disabled">
             <IconBrandGoogle />
           </button>
-          <button
-          title="Login with Instagram"
-          class="disabled"
-          >
+          <button title="Login with Instagram" class="disabled">
             <IconBrandInstagram />
           </button>
         </div>
-        
       </div>
 
-
-      <button
-        type="submit"
-        class="login__button"
-        title="Login into Ask!"
-      >
-      Login
+      <button type="submit" class="login__button" title="Login into Ask!">
+        Login
       </button>
     </form>
 
-    <p
-      style="margin-top: 4px;"
-    >
-      If you have'nt an account, you can create <a href="/sign" title="Go to sign page">here</a>.
+    <p style="margin-top: 4px;">
+      If you have'nt an account, you can create <a
+        href="/sign"
+        title="Go to sign page">here</a
+      >.
     </p>
   </section>
 </Layout>
@@ -100,7 +97,8 @@ description=""
       color: var(--color_accent);
     }
   }
-  .login__h2 {}
+  .login__h2 {
+  }
   .login__form {
     display: flex;
     flex-flow: column;
@@ -137,21 +135,20 @@ description=""
     & > button {
       background: none;
       border: none;
-      transition: transform .2s ease;
+      transition: transform 0.2s ease;
 
       cursor: pointer;
       &:hover {
         transform: scale(1.02);
       }
       &:active {
-        transform: scale(.99);
+        transform: scale(0.99);
       }
-
 
       & > svg {
         width: 30px;
         color: var(--color_accent);
-      } 
+      }
     }
   }
   .login__button {
@@ -177,8 +174,23 @@ description=""
   }
   .disabled {
     pointer-events: none;
-    transform: scale(.9);
+    transform: scale(0.9);
     cursor: none;
-    opacity: .8;
+    opacity: 0.8;
   }
 </style>
+
+<!-- <script>
+  const $form = document.querySelector('.login__form') as HTMLFormElement
+  
+  $form.addEventListener('submit', (event) => {
+    event.preventDefault()
+    fetch('/api/auth', {
+      method: 'post',
+      body: new FormData(event.target as HTMLFormElement),
+      credentials: 'include'
+    })
+      .then(res => console.log(res) )
+      .catch(err => console.error(false, err))
+  })
+</script> -->

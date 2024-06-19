@@ -37,8 +37,10 @@ async function logIn (payload: FormData) {
     }
 
     authStore.set({ isAuth: true, userLogged: result.data, errors: null })
+    
     return {
-      hasLogged: true
+      hasLogged: true,
+      cookie: result.headers?.getSetCookie()[0]
     }
 
   }
