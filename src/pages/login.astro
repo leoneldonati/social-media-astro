@@ -3,12 +3,15 @@ import { post } from "../helpers/fetch";
 import Layout from "../layouts/Layout.astro";
 import { IconBrandGoogle, IconBrandInstagram } from "@tabler/icons-react";
 import { authStore } from "../stores/auth";
+import ErrorCard from "../components/error-card.astro";
+
+let errors = null;
 
 if (Astro.request.method === 'POST') {
 
   const form = await Astro.request.formData()
 
-  const { headers, ok, data } = await post('auth?type=login', form)
+  const { headers, ok, data, error } = await post('auth?type=login', form)
 
   if (ok) {
     const sessionString = headers?.get('set-cookie')?.match(/session=([^;]+);/)![1];
@@ -16,10 +19,14 @@ if (Astro.request.method === 'POST') {
     Astro.cookies.set('session', sessionString!)
     
     authStore.set({ isAuth: true, userLogged: data, errors: null })
-    
+
     return Astro.redirect('/')
   }
+
+  authStore.set({ isAuth: false, errors: error, userLogged: null})
 }
+
+console.log(authStore.get())
 ---
 
 <Layout page="Login" description="">
@@ -80,6 +87,11 @@ if (Astro.request.method === 'POST') {
         title="Go to sign page">here</a
       >.
     </p>
+
+
+    <!-- error card -->
+
+    {errors && <ErrorCard error={errors} />}
   </section>
 </Layout>
 
@@ -179,18 +191,3 @@ if (Astro.request.method === 'POST') {
     opacity: 0.8;
   }
 </style>
-
-<!-- <script>
-  const $form = document.querySelector('.login__form') as HTMLFormElement
-  
-  $form.addEventListener('submit', (event) => {
-    event.preventDefault()
-    fetch('/api/auth', {
-      method: 'post',
-      body: new FormData(event.target as HTMLFormElement),
-      credentials: 'include'
-    })
-      .then(res => console.log(res) )
-      .catch(err => console.error(false, err))
-  })
-</script> -->
