@@ -2,11 +2,30 @@
 import Layout from "../layouts/Layout.astro";
 import { authStore } from "../stores/auth";
 
-if (!authStore.get().isAuth) return Astro.redirect('/login')
+if (!authStore.get().isAuth) return Astro.redirect("/login");
+
+console.log(authStore.get());
 ---
 
 <Layout>
-	<section>
-		HOME
-	</section>
+  <section class="home">
+    <header class="home__header">
+      <h1 class="home__h1" transition:name="ask">Ask!</h1>
+
+      <ul class="home__ul">
+        <li>
+          <a class="home__header__btn" href="/search">Search</a>
+        </li>
+        <li>
+          <a class="home__header__btn" href="/profile">Profile</a>
+        </li>
+        <li>
+          <button class="home__header__btn">Logout</button>
+        </li>
+      </ul>
+    </header>
+
+
+		
+  </section>
 </Layout>

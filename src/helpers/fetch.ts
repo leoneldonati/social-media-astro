@@ -36,10 +36,12 @@ async function post(endpoint: string, payload: FormData) {
       method: 'POST',
     })  
 
+    
     return {
       ok: response.ok,
       data: response.ok ? (await response.json()) : null,
-      error: response.ok ? null : (await response.json())
+      error: response.ok ? null : (await response.json()),
+      headers: response.headers
     }
   }
   catch (e) {

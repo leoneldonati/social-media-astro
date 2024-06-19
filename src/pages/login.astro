@@ -1,6 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { IconBrandGoogle, IconBrandInstagram } from '@tabler/icons-react'
+import { logIn } from "../services/auth";
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData()
+
+  const { hasLogged } = await logIn(form)
+
+  if (hasLogged) return Astro.redirect('/')
+}
 ---
 
 <Layout
@@ -11,7 +20,7 @@ description=""
     class="login"
   >
     <h1 class="login__h1">
-      Login into <span>Ask!</span> and share.
+      Login into <span transition:name="ask">Ask!</span> and share.
     </h1>
 
     <h2 class="login__h2">
@@ -19,15 +28,15 @@ description=""
     </h2>
 
 
-    <form method="post" class="login__form">
-      <label for="email" class="login__label">
+    <form method="post" class="login__form" transition:name="form">
+      <label for="email" class="login__label" transition:name="email">
         <span>
           Email
         </span>
         <input class="login__input" type="email" autofocus name="email" id="email" placeholder="example@example.com">
       </label>
       
-      <label for="password" class="login__label">
+      <label for="password" class="login__label" transition:name="password">
         <span>
           Password
         </span>
@@ -45,11 +54,13 @@ description=""
         >
           <button
             title="Login with Google"
+            class="disabled"
           >
             <IconBrandGoogle />
           </button>
           <button
           title="Login with Instagram"
+          class="disabled"
           >
             <IconBrandInstagram />
           </button>
@@ -66,6 +77,12 @@ description=""
       Login
       </button>
     </form>
+
+    <p
+      style="margin-top: 4px;"
+    >
+      If you have'nt an account, you can create <a href="/sign" title="Go to sign page">here</a>.
+    </p>
   </section>
 </Layout>
 
@@ -157,5 +174,11 @@ description=""
       transform: scale(0.99);
       box-shadow: 0 4px 6px var(--color_accent_light);
     }
+  }
+  .disabled {
+    pointer-events: none;
+    transform: scale(.9);
+    cursor: none;
+    opacity: .8;
   }
 </style>

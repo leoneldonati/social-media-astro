@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+
 interface Props {
   page?: string;
   description?: string;
@@ -13,6 +15,8 @@ const { page, description } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+
+    <ViewTransitions fallback='none' />
     <!-- SEO -->
 
     <title>Ask! - {page}</title>

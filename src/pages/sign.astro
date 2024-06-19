@@ -23,16 +23,19 @@ console.log(errors)
 <Layout description="" page="Sign in">
   <section class="sign">
     <h1 class="sign__h1">
-      Join to <span>Ask!</span>
+      Join to <span transition:name="ask">Ask!</span>
     </h1>
 
     <h2 class="sign__h2">Ask, debate and share everything you feel!</h2>
 
-    <form class="sign__form" method="post" enctype="multipart/form-data">
+    <form class="sign__form" method="post" enctype="multipart/form-data" transition:name="form">
       <AvatarSelector client:visible />
 
       <div class="sign__container--names">
         <label for="name" class="sign__label">
+          <span>
+            Name
+          </span>
           <input
             type="text"
             id="name"
@@ -44,6 +47,9 @@ console.log(errors)
         </label>
 
         <label for="lastname" class="sign__label">
+          <span>
+            Lastname
+          </span>
           <input
             type="text"
             id="lastname"
@@ -55,6 +61,9 @@ console.log(errors)
       </div>
 
       <label for="username" class="sign__label">
+        <span>
+          Pic a username
+        </span>
         <input
           type="text"
           id="username"
@@ -64,7 +73,10 @@ console.log(errors)
         />
       </label>
 
-      <label for="email" class="sign__label">
+      <label for="email" class="sign__label" transition:name="email">
+        <span>
+          Email
+        </span>
         <input
           type="email"
           name="email"
@@ -74,7 +86,10 @@ console.log(errors)
         />
       </label>
 
-      <label for="password" class="sign__label">
+      <label for="password" class="sign__label" transition:name="password">
+        <span>
+          Take a password
+        </span>
         <input
           type="text"
           name="password"
@@ -85,6 +100,9 @@ console.log(errors)
       </label>
 
       <label for="bio" class="sign__label">
+        <span>
+          Write some about you
+        </span>
         <textarea
           name="bio"
           id="bio"
@@ -93,6 +111,9 @@ console.log(errors)
       </label>
 
       <label for="date" class="sign__label">
+        <span>
+          Your date
+        </span>
         <input type="date" name="date" id="date" class="sign__input" />
       </label>
 
@@ -123,8 +144,8 @@ console.log(errors)
     align-items: center;
     gap: 1em;
     width: 100%;
-    max-width: 500px;
-    margin-top: 15px;
+    max-width: 400px;
+    margin: 15px auto 0 auto;
     border: 1px solid var(--color_secondary);
     border-radius: var(--border_size);
     padding: var(--padding_boxes);
