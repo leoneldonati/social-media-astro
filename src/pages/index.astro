@@ -2,12 +2,21 @@
 import { IconSearch, IconUser } from "@tabler/icons-react";
 import Layout from "../layouts/Layout.astro";
 import { authStore } from "../stores/auth";
+import { get } from "../helpers/fetch";
+import PostCard from "../components/post-card.astro";
 
 if (!authStore.get().isAuth) return Astro.redirect("/login");
 
 const userLogged = authStore.get().userLogged!;
 
 const avatar = JSON.parse(userLogged.avatar).optimized.secureUrl as string
+
+const headers = new Headers()
+headers.append('Cookie', `session=${Astro.cookies.get('session')?.value}`)
+
+const { ok, data, error } = await get('posts?q=15', { headers })
+
+const posts = ok ? data as Post[] : data as [];
 ---
 
 <Layout
@@ -41,15 +50,27 @@ description=""
         >
       </button>
     </header>
+
+
+    <div
+    class="home_container--posts"
+    >
+      {
+        posts.length !== 0 && posts.map(post => <PostCard post={post} />)
+      }
+    </div>
   </section>
 </Layout>
 
 <style>
   .home {
     min-height: 100dvh;
+    display: flex;
+    flex-flow: column;
   }
   .home__header {
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -59,6 +80,7 @@ description=""
   }
   .home__header__h1 {
     color: var(--color_accent);
+    pointer-events: none;
   }
   .home__header__ul {
     flex: 1;
@@ -103,6 +125,21 @@ description=""
       aspect-ratio: 4 / 4;
       object-fit: cover;
       object-position: center;
+    }
+  }
+
+
+  .home_container--posts {
+    flex: 1;
+    max-width: calc(var(--max_w) - 200px);
+    width: 100%;
+    max-height: calc(100dvh - 66px);
+    margin: 0 auto;
+    overflow-y: scroll;
+    border-left: 1px solid var(--color_secondary);
+    border-right: 1px solid var(--color_secondary);
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
 </style>

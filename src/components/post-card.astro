@@ -1,0 +1,64 @@
+---
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+
+const { post_content, files: filesString } = post;
+
+const files = filesString && JSON.parse(filesString);
+
+const avatarOwner = JSON.parse(post.owner.avatar).optimized.secureUrl;
+
+console.log(files, avatarOwner);
+---
+
+<article class="post">
+  
+  
+  <div
+  class="post__container"
+  >
+  <p class="post__content">
+    {post_content}
+  </p>
+  
+  {
+    !files[0].secure_url ? (
+      <img
+        src={files[0].secure_url}
+        alt="Post image"
+        class="post__image"
+        loading="lazy"
+      />
+    ) : null
+  }
+  </div>
+  <a href={`/users/${post.owner.id}`} class="post__btn" title={`Go to @${post.owner.username} profile.`}>
+    <img src={avatarOwner} alt="" class="post__btn__avatar" loading="lazy"/>
+  </a>
+</article>
+
+<style>
+  .post {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: start;
+    border-bottom: 1px solid var(--color_secondary);
+    padding: var(--padding_boxes) 0;
+    width: 100%;
+  }
+
+  .post__content {
+  }
+
+  .post__image {
+  }
+
+  .post__btn {}
+  .post__btn__avatar {
+    aspect-ratio: 4 / 4;
+  }
+</style>

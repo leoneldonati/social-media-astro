@@ -13,3 +13,14 @@ interface UserLogged {
   location: null;
   avatar: string;
 }
+
+interface Post {
+  post_id: string;
+  post_content: string;
+  post_created_at: string;
+  post_updated_at: string;
+  owner: any;
+  like_user_ids: [];
+  comments: [];
+  files: string;
+}

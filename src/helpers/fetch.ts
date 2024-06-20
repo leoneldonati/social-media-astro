@@ -4,11 +4,13 @@ const FETCH_OPTIONS = {
   credentials: 'include' as 'include'
 }
 
-async function get(endpoint: string) {
+
+async function get(endpoint: string, config?: { headers: Headers }) {
   try {
     const response = await fetch(`${serverHost}/v${apiVersion}/${endpoint}`, {
       ...FETCH_OPTIONS,
-      method: 'GET'
+      method: 'GET',
+      headers: config?.headers
     })
 
     return {
@@ -27,13 +29,14 @@ async function get(endpoint: string) {
   
 }
 
-async function post(endpoint: string, payload: FormData) {
+async function post(endpoint: string, payload: FormData, config?: { headers: Headers }) {
   
   try {
     const response = await fetch(`${serverHost}/v${apiVersion}/${endpoint}`, {
       ...FETCH_OPTIONS,
       body: payload,
       method: 'POST',
+      headers: config?.headers
     })  
 
     

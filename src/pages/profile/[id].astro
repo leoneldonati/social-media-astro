@@ -1,124 +1,107 @@
 ---
-import AvatarSelector from "../../components/avatar-selector"
-import Layout from "../../layouts/Layout.astro"
-import { authStore } from "../../stores/auth"
+import AvatarSelector from "../../components/avatar-selector";
+import Layout from "../../layouts/Layout.astro";
+import { authStore } from "../../stores/auth";
 
-const id = Astro.params?.id
+const id = Astro.params?.id;
 
-const userLogged = authStore.get().userLogged!
+const userLogged = authStore.get().userLogged!;
 
-const avatar = JSON.parse(userLogged.avatar).optimized.secureUrl as string
+const avatar = JSON.parse(userLogged.avatar).optimized.secureUrl as string;
 
-const name = userLogged.name.split(' ')[0]
-const lastname = userLogged.name.split(' ')[1]
+const name = userLogged.name.split(" ")[0];
+const lastname = userLogged.name.split(" ")[1];
 
-console.log({ name, lastname })
 ---
 
-<Layout
-page=""
-description=""
->
-<section>
-  <form class="edit__form" method="post" enctype="multipart/form-data" transition:name="form">
-    <AvatarSelector avatar={avatar} client:visible />
+<Layout page="Edit your profile." description="">
+  <section class="edit">
+    <form class="edit__form" method="post" enctype="multipart/form-data">
+      <AvatarSelector avatar={avatar} client:visible />
 
-    <div class="edit__container--names">
-      <label for="name" class="edit__label">
-        <span>
-          Name
-        </span>
+      <div class="edit__container--names">
+        <label for="name" class="edit__label">
+          <span> Name </span>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder={name}
+            class="edit__input"
+            autofocus
+          />
+        </label>
+
+        <label for="lastname" class="edit__label">
+          <span> Lastname </span>
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            placeholder={lastname}
+            class="edit__input"
+          />
+        </label>
+      </div>
+
+      <label for="username" class="edit__label">
+        <span> Pic a username </span>
         <input
           type="text"
-          id="name"
-          name="name"
-          placeholder="John"
+          id="username"
+          name="username"
+          placeholder={userLogged.username}
           class="edit__input"
-          value={name}
-          autofocus
         />
       </label>
 
-      <label for="lastname" class="edit__label">
-        <span>
-          Lastname
-        </span>
+      <label for="email" class="edit__label">
+        <span> Email </span>
         <input
-          type="text"
-          id="lastname"
-          name="lastname"
-          placeholder="Oxford"
+          type="email"
+          name="email"
+          id="email"
+          placeholder={userLogged.email}
           class="edit__input"
-          value={lastname}
         />
       </label>
-    </div>
 
-    <label for="username" class="edit__label">
-      <span>
-        Pic a username
-      </span>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        placeholder="johnoxford"
-        class="edit__input"
-        value={userLogged.username}
-      />
-    </label>
+      <label for="password" class="edit__label">
+        <span> Take a password </span>
+        <input
+          type="text"
+          name="password"
+          id="password"
+          placeholder="********"
+          class="edit__input"
+        />
+      </label>
 
-    <label for="email" class="edit__label" transition:name="email">
-      <span>
-        Email
-      </span>
-      <input
-        type="email"
-        name="email"
-        id="email"
-        placeholder="johnoxford@mydomain.com"
-        class="edit__input"
-        value=""
-      />
-    </label>
+      <label for="bio" class="edit__label">
+        <span> Write some about you </span>
+        <textarea
+          name="bio"
+          id="bio"
+          placeholder={userLogged.bio}
+          class="edit__input--bio"></textarea>
+      </label>
 
-    <label for="password" class="edit__label" transition:name="password">
-      <span>
-        Take a password
-      </span>
-      <input
-        type="text"
-        name="password"
-        id="password"
-        placeholder="********"
-        class="edit__input"
-      />
-    </label>
+      <label for="date" class="edit__label">
+        <span> Your date </span>
+        <input type="date" name="date" id="date" class="edit__input" />
+      </label>
 
-    <label for="bio" class="edit__label">
-      <span>
-        Write some about you
-      </span>
-      <textarea
-        name="bio"
-        id="bio"
-        placeholder="This is my bio."
-        class="edit__input--bio"></textarea>
-    </label>
-
-    <label for="date" class="edit__label">
-      <span>
-        Your date
-      </span>
-      <input type="date" name="date" id="date" class="edit__input" />
-    </label>
-
-    <button type="submit" class="edit__button"> sign up </button>
-  </form>
-</section>
+      <button type="submit" class="edit__button">Save profile</button>
+    </form>
+  </section>
 </Layout>
 
 <style>
+  .edit {
+    min-height: 100dvh;
+    display: grid;
+    place-content: center;
+  }
   .edit__form {
     display: flex;
     flex-flow: column;
@@ -172,4 +155,3 @@ description=""
     }
   }
 </style>
-
