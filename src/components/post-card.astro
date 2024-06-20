@@ -1,4 +1,6 @@
 ---
+import { IconPoint } from "@tabler/icons-react";
+import { parseDate } from '../helpers/date'
 interface Props {
   post: Post;
 }
@@ -11,32 +13,48 @@ const files = filesString && JSON.parse(filesString);
 
 const avatarOwner = JSON.parse(post.owner.avatar).optimized.secureUrl;
 
-console.log(files, avatarOwner);
+console.log(post);
+
+const createdAt = parseDate(post.post_created_at)
 ---
 
 <article class="post">
-  
-  
-  <div
-  class="post__container"
-  >
-  <p class="post__content">
-    {post_content}
-  </p>
-  
-  {
-    !files[0].secure_url ? (
-      <img
-        src={files[0].secure_url}
-        alt="Post image"
-        class="post__image"
-        loading="lazy"
-      />
-    ) : null
-  }
+  <div class="post__container">
+    <h2 class="post__h2">
+      {post.owner.name}
+      <IconPoint />
+      <a
+        href={`/users/${post.owner.id}`}
+        title={`Go to @${post.owner.username} profile`}
+        >@{post.owner.username}</a
+      >
+      <IconPoint />
+
+      <span>
+        {createdAt}
+      </span>
+    </h2>
+    <p class="post__content">
+      {post_content}
+    </p>
+
+    {
+      files[0].secure_url ? (
+        <img
+          src={files[0].secure_url}
+          alt="Post image"
+          class="post__image"
+          loading="lazy"
+        />
+      ) : null
+    }
   </div>
-  <a href={`/users/${post.owner.id}`} class="post__btn" title={`Go to @${post.owner.username} profile.`}>
-    <img src={avatarOwner} alt="" class="post__btn__avatar" loading="lazy"/>
+  <a
+    href={`/users/${post.owner.id}`}
+    class="post__btn"
+    title={`Go to @${post.owner.username} profile.`}
+  >
+    <img src={avatarOwner} alt="" class="post__btn__avatar" loading="lazy" />
   </a>
 </article>
 
@@ -47,18 +65,49 @@ console.log(files, avatarOwner);
     justify-content: space-between;
     align-items: start;
     border-bottom: 1px solid var(--color_secondary);
-    padding: var(--padding_boxes) 0;
+    padding: var(--padding_boxes) 8px;
     width: 100%;
   }
+  .post__container {
+    max-width: 89%;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    gap: 6px;
+  }
+  .post__h2 {
+    display: flex;
+    align-items: center;
+    font-size: large;
 
+    & > svg {
+      color: var(--color_secondary);
+    }
+    & > a, & > span {
+      color: var(--color_secondary_text);
+      font-size: small;
+      font-style: italic;
+    }
+  }
   .post__content {
   }
 
   .post__image {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--border_size);
   }
 
-  .post__btn {}
+  .post__btn {
+    display: flex;
+    border: 1px solid var(--color_secondary);
+    border-radius: 100%;
+    overflow: hidden;
+  }
   .post__btn__avatar {
     aspect-ratio: 4 / 4;
+    object-fit: cover;
+    object-position: center;
   }
 </style>
