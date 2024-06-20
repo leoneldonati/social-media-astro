@@ -9,20 +9,17 @@ if (!authStore.get().isAuth) return Astro.redirect("/login");
 
 const userLogged = authStore.get().userLogged!;
 
-const avatar = JSON.parse(userLogged.avatar).optimized.secureUrl as string
+const avatar = JSON.parse(userLogged.avatar).optimized.secureUrl as string;
 
-const headers = new Headers()
-headers.append('Cookie', `session=${Astro.cookies.get('session')?.value}`)
+const headers = new Headers();
+headers.append("Cookie", `session=${Astro.cookies.get("session")?.value}`);
 
-const { ok, data, error } = await get('posts?q=15', { headers })
+const { ok, data, error } = await get("posts?q=15", { headers });
 
-const posts = ok ? data as Post[] : data as [];
+const posts = ok ? (data as Post[]) : (data as []);
 ---
 
-<Layout
-page="Home"
-description=""
->
+<Layout page="Home" description="">
   <section class="home">
     <header class="home__header">
       <h1 class="home__header__h1" transition:name="ask">Ask!</h1>
@@ -41,23 +38,18 @@ description=""
       </ul>
 
       <button class="home__header__btn--session" title="Close session?">
-        <img 
-          src={avatar} 
+        <img
+          src={avatar}
           alt={userLogged.name}
           loading="lazy"
           class="home__header_avatar"
           transition:name="avatar"
-        >
+        />
       </button>
     </header>
 
-
-    <div
-    class="home_container--posts"
-    >
-      {
-        posts.length !== 0 && posts.map(post => <PostCard post={post} />)
-      }
+    <div class="home_container--posts">
+      {posts.length !== 0 && posts.map((post) => <PostCard post={post} />)}
     </div>
   </section>
 </Layout>
@@ -96,7 +88,7 @@ description=""
     box-shadow: 0 0 0 transparent;
     border-radius: var(--border_size);
     padding: 2px;
-    transition: box-shadow .1s ease-in-out;
+    transition: box-shadow 0.1s ease-in-out;
     &:hover {
       box-shadow: 0 4px 2px var(--color_secondary);
     }
@@ -112,7 +104,7 @@ description=""
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0 0 5px var(--color_accent);
-    transition: box-shadow .2s ease-in;
+    transition: box-shadow 0.2s ease-in;
 
     &:hover {
       box-shadow: 0 4px 5px var(--color_accent);
@@ -127,7 +119,6 @@ description=""
       object-position: center;
     }
   }
-
 
   .home_container--posts {
     flex: 1;

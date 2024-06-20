@@ -2,8 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import AvatarSelector from "../components/avatar-selector";
 import { signUp } from "../services/auth";
-import { authStore } from '../stores/auth'
-
+import { authStore } from "../stores/auth";
 
 if (Astro.request.method === "POST") {
   const form = await Astro.request.formData();
@@ -15,9 +14,9 @@ if (Astro.request.method === "POST") {
   }
 }
 
-const { errors } = authStore.get()
+const { errors } = authStore.get();
 
-console.log(errors)
+console.log(errors);
 ---
 
 <Layout description="" page="Sign in">
@@ -28,14 +27,17 @@ console.log(errors)
 
     <h2 class="sign__h2">Ask, debate and share everything you feel!</h2>
 
-    <form class="sign__form" method="post" enctype="multipart/form-data" transition:name="form">
+    <form
+      class="sign__form"
+      method="post"
+      enctype="multipart/form-data"
+      transition:name="form"
+    >
       <AvatarSelector client:visible />
 
       <div class="sign__container--names">
         <label for="name" class="sign__label">
-          <span>
-            Name
-          </span>
+          <span> Name </span>
           <input
             type="text"
             id="name"
@@ -47,9 +49,7 @@ console.log(errors)
         </label>
 
         <label for="lastname" class="sign__label">
-          <span>
-            Lastname
-          </span>
+          <span> Lastname </span>
           <input
             type="text"
             id="lastname"
@@ -61,9 +61,7 @@ console.log(errors)
       </div>
 
       <label for="username" class="sign__label">
-        <span>
-          Pic a username
-        </span>
+        <span> Pic a username </span>
         <input
           type="text"
           id="username"
@@ -74,9 +72,7 @@ console.log(errors)
       </label>
 
       <label for="email" class="sign__label" transition:name="email">
-        <span>
-          Email
-        </span>
+        <span> Email </span>
         <input
           type="email"
           name="email"
@@ -87,9 +83,7 @@ console.log(errors)
       </label>
 
       <label for="password" class="sign__label" transition:name="password">
-        <span>
-          Take a password
-        </span>
+        <span> Take a password </span>
         <input
           type="text"
           name="password"
@@ -100,9 +94,7 @@ console.log(errors)
       </label>
 
       <label for="bio" class="sign__label">
-        <span>
-          Write some about you
-        </span>
+        <span> Write some about you </span>
         <textarea
           name="bio"
           id="bio"
@@ -111,9 +103,7 @@ console.log(errors)
       </label>
 
       <label for="date" class="sign__label">
-        <span>
-          Your date
-        </span>
+        <span> Your date </span>
         <input type="date" name="date" id="date" class="sign__input" />
       </label>
 

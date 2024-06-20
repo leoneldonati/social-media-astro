@@ -33,9 +33,7 @@ const userBd = new Date(userLogged.DATE).toLocaleDateString("es");
         <span class="profile__h1__span">@{userLogged.username}</span>
       </h1>
 
-      <p
-        class="profile_p"
-      >
+      <p class="profile_p">
         {userLogged.bio}
       </p>
       <ul class="profile__ul">
@@ -56,12 +54,8 @@ const userBd = new Date(userLogged.DATE).toLocaleDateString("es");
       </a>
     </div>
 
-    <hr>
-    <div
-      class="profile__container--posts"
-    >
-
-    </div>
+    <hr />
+    <div class="profile__container--posts"></div>
   </section>
 </Layout>
 
@@ -97,10 +91,10 @@ const userBd = new Date(userLogged.DATE).toLocaleDateString("es");
     background-color: var(--color_accent);
     color: #fff;
     box-shadow: 0 0 4px var(--color_accent_light);
-    transition: transform .2s ease;
+    transition: transform 0.2s ease;
 
     &:hover {
-      transform: scale(.98);
+      transform: scale(0.98);
     }
   }
   .profile__h1 {

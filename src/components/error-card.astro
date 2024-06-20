@@ -1,5 +1,4 @@
 ---
-
 interface Props {
   error: any;
 }
@@ -20,14 +19,13 @@ const defaultMessage = "Please retry o re-chargue tab.";
 </article>
 
 <script defer>
-  const $article = document.getElementById('card')
+  const $article = document.getElementById("card");
 
-  
   setTimeout(() => {
-    $article.style.opacity = '0'
-    $article.style.transform = 'scale(.4)'
-    $article.style.transform = 'translateX(-20%)'
-  }, 3000)  
+    $article.style.opacity = "0";
+    $article.style.transform = "scale(.4)";
+    $article.style.transform = "translateX(-20%)";
+  }, 3000);
 </script>
 
 <style>
@@ -45,7 +43,9 @@ const defaultMessage = "Please retry o re-chargue tab.";
     color: white;
     pointer-events: none;
 
-    transition: transform .2s ease-out, opacity .4s ease-in-out;
+    transition:
+      transform 0.2s ease-out,
+      opacity 0.4s ease-in-out;
   }
   .error__h2 {
   }

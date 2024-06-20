@@ -5,12 +5,10 @@
   height: 70px;
   width: 70px;
   cursor: pointer;
-  
 
   & .selected-avatar {
     aspect-ratio: 4 / 4;
     object-fit: cover;
     object-position: center;
-    
   }
 }

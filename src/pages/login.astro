@@ -5,28 +5,27 @@ import { IconBrandGoogle, IconBrandInstagram } from "@tabler/icons-react";
 import { authStore } from "../stores/auth";
 import ErrorCard from "../components/error-card.astro";
 
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
 
-if (Astro.request.method === 'POST') {
-
-  const form = await Astro.request.formData()
-
-  const { headers, ok, data, error } = await post('auth?type=login', form)
+  const { headers, ok, data, error } = await post("auth?type=login", form);
 
   if (ok) {
-    const sessionString = headers?.get('set-cookie')?.match(/session=([^;]+);/)![1];
-  
-    Astro.cookies.set('session', sessionString!)
-    
-    authStore.set({ isAuth: true, userLogged: data, errors: null })
+    const sessionString = headers
+      ?.get("set-cookie")
+      ?.match(/session=([^;]+);/)![1];
 
-    return Astro.redirect('/')
+    Astro.cookies.set("session", sessionString!);
+
+    authStore.set({ isAuth: true, userLogged: data, errors: null });
+
+    return Astro.redirect("/");
   }
 
-
-  authStore.set({ isAuth: false, errors: error, userLogged: null})
+  authStore.set({ isAuth: false, errors: error, userLogged: null });
 }
 
-const { errors } = authStore.get()
+const { errors } = authStore.get();
 ---
 
 <Layout page="Login" description="">
@@ -88,10 +87,9 @@ const { errors } = authStore.get()
       >.
     </p>
 
-
     <!-- error card -->
 
-    {errors !== null ? <ErrorCard error={errors}/> : null}
+    {errors !== null ? <ErrorCard error={errors} /> : null}
   </section>
 </Layout>
 

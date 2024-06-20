@@ -24,3 +24,14 @@ interface Post {
   comments: [];
   files: string;
 }
+
+interface PostProfile {
+  id: string;
+  content: string;
+  userid: string;
+  createdAt: string;
+  updatedAt: string
+}
+interface UserSelected extends UserLogged {
+  posts: PostProfile[];
+}

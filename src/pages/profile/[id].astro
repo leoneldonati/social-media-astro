@@ -7,11 +7,13 @@ const id = Astro.params?.id;
 
 const userLogged = authStore.get().userLogged!;
 
+if (userLogged.id !== id) return Astro.redirect('/')
+
+
 const avatar = JSON.parse(userLogged.avatar).optimized.secureUrl as string;
 
 const name = userLogged.name.split(" ")[0];
 const lastname = userLogged.name.split(" ")[1];
-
 ---
 
 <Layout page="Edit your profile." description="">

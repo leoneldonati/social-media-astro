@@ -1,6 +1,6 @@
 ---
 import { IconPoint } from "@tabler/icons-react";
-import { parseDate } from '../helpers/date'
+import { parseDate } from "../helpers/date";
 interface Props {
   post: Post;
 }
@@ -15,7 +15,7 @@ const avatarOwner = JSON.parse(post.owner.avatar).optimized.secureUrl;
 
 console.log(post);
 
-const createdAt = parseDate(post.post_created_at)
+const createdAt = parseDate(post.post_created_at);
 ---
 
 <article class="post">
@@ -83,7 +83,8 @@ const createdAt = parseDate(post.post_created_at)
     & > svg {
       color: var(--color_secondary);
     }
-    & > a, & > span {
+    & > a,
+    & > span {
       color: var(--color_secondary_text);
       font-size: small;
       font-style: italic;
