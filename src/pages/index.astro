@@ -1,31 +1,108 @@
 ---
+import { IconSearch, IconUser } from "@tabler/icons-react";
 import Layout from "../layouts/Layout.astro";
 import { authStore } from "../stores/auth";
 
 if (!authStore.get().isAuth) return Astro.redirect("/login");
 
-console.log(authStore.get());
+const userLogged = authStore.get().userLogged!;
+
+const avatar = JSON.parse(userLogged.avatar).optimized.secureUrl as string
 ---
 
-<Layout>
+<Layout
+page="Home"
+description=""
+>
   <section class="home">
     <header class="home__header">
-      <h1 class="home__h1" transition:name="ask">Ask!</h1>
+      <h1 class="home__header__h1" transition:name="ask">Ask!</h1>
 
-      <ul class="home__ul">
+      <ul class="home__header__ul">
         <li>
-          <a class="home__header__btn" href="/search">Search</a>
+          <a class="home__header__btn" href="/search">
+            <IconSearch /> Search
+          </a>
         </li>
         <li>
-          <a class="home__header__btn" href="/profile">Profile</a>
-        </li>
-        <li>
-          <button class="home__header__btn">Logout</button>
+          <a class="home__header__btn" href="/profile">
+            <IconUser /> Profile
+          </a>
         </li>
       </ul>
+
+      <button class="home__header__btn--session" title="Close session?">
+        <img 
+          src={avatar} 
+          alt={userLogged.name}
+          loading="lazy"
+          class="home__header_avatar"
+          transition:name="avatar"
+        >
+      </button>
     </header>
-
-		
-
   </section>
 </Layout>
+
+<style>
+  .home {
+    min-height: 100dvh;
+  }
+  .home__header {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 4px 6px;
+    border-bottom: 1px solid var(--color_secondary);
+    border-radius: var(--padding_boxes);
+  }
+  .home__header__h1 {
+    color: var(--color_accent);
+  }
+  .home__header__ul {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .home__header__btn {
+    color: var(--color_secondary_text);
+    display: flex;
+    align-items: self-end;
+    gap: 2px;
+    box-shadow: 0 0 0 transparent;
+    border-radius: var(--border_size);
+    padding: 2px;
+    transition: box-shadow .1s ease-in-out;
+    &:hover {
+      box-shadow: 0 4px 2px var(--color_secondary);
+    }
+    &:active {
+      box-shadow: 0 2px 2px var(--color_secondary);
+    }
+  }
+  .home__header__btn--session {
+    display: flex;
+    background: none;
+    border: 1px solid var(--color_accent_light);
+    border-radius: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 0 5px var(--color_accent);
+    transition: box-shadow .2s ease-in;
+
+    &:hover {
+      box-shadow: 0 4px 5px var(--color_accent);
+    }
+    &:active {
+      box-shadow: 0 1px 5px var(--color_accent);
+    }
+
+    & > img {
+      aspect-ratio: 4 / 4;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+</style>

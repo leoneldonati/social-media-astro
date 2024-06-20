@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './index.css'
 import { IconPlus } from '@tabler/icons-react'
-export default function AvatarSelector () {
+export default function AvatarSelector ({ avatar }: { avatar?: string }) {
   const [selectedAvatar, setSelectedAvatar] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,11 +17,11 @@ export default function AvatarSelector () {
     <label htmlFor="avatar" className="sign__label--avatar" title='Take a picture.'>
         <input type="file" onChange={handleChange} accept="image/*" id="avatar" name="avatar" hidden />
       {
-        selectedAvatar !== ''
-        && <img src={selectedAvatar} className='sign__label--avatar selected-avatar' loading='lazy'/>
+        selectedAvatar !== '' || avatar
+        && <img src={selectedAvatar || avatar} className='sign__label--avatar selected-avatar' loading='lazy'/>
       }
 
-      {!selectedAvatar && <IconPlus style={{ inset: 22, position: 'absolute'}}/>}
+      {!selectedAvatar && !avatar && <IconPlus style={{ inset: 22, position: 'absolute'}}/>}
     </label>
   )
 }

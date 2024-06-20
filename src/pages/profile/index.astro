@@ -1,0 +1,98 @@
+---
+import {
+  IconCake,
+  IconCalendarClock,
+  IconMapPin,
+  IconPoint,
+} from "@tabler/icons-react";
+import Layout from "../../layouts/Layout.astro";
+import { authStore } from "../../stores/auth";
+
+const userLogged = authStore.get().userLogged!;
+
+const avatar = JSON.parse(userLogged.avatar).original.secureUrl as string;
+const createdAt = new Date(userLogged.createdAt).toLocaleDateString("es");
+const userBd = new Date(userLogged.DATE).toLocaleDateString("es");
+---
+
+<Layout page={`@${userLogged.username}`} description={userLogged.bio}>
+  <section class="profile">
+    <img
+      class="profile__img"
+      src={avatar}
+      alt={`${userLogged.name} avatar.`}
+      loading="lazy"
+      transition:name="avatar"
+    />
+
+    <div class="profile__container">
+      <h1 class="profile__h1">
+        {userLogged.name}
+        <IconPoint />
+        <span class="profile__h1__span">@{userLogged.username}</span>
+      </h1>
+
+      <ul class="profile__ul">
+        <li>
+          <IconCalendarClock /> Joined at: {createdAt}
+        </li>
+        <li>
+          <IconCake /> Birthday: {userBd}
+        </li>
+        <li>
+          <IconMapPin />
+          {userLogged.location ? userLogged.location : "None"}
+        </li>
+      </ul>
+
+      <a class="profile__btn--edit" href={`/profile/${userLogged.id}`}>
+        Edit profile
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .profile {
+    min-height: 100dvh;
+    padding: 6px;
+  }
+  .profile__img {
+    display: flex;
+    aspect-ratio: 4 / 4;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 0 8px var(--color_secondary);
+  }
+  .profile__container {
+    position: relative;
+  }
+  .profile__btn--edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    max-width: fit-content;
+    border-radius: var(--border_size);
+    padding: var(--padding_boxes);
+    background-color: var(--color_accent);
+    color: #fff;
+    transition: transform .2s ease;
+
+    &:hover {
+      transform: scale(.98);
+    }
+  }
+  .profile__h1 {
+    display: flex;
+  }
+  .profile__h1__span {
+    color: var(--color_secondary_text);
+  }
+  .profile__ul {
+    color: var(--color_secondary_text);
+  }
+</style>

@@ -5,7 +5,6 @@ import { IconBrandGoogle, IconBrandInstagram } from "@tabler/icons-react";
 import { authStore } from "../stores/auth";
 import ErrorCard from "../components/error-card.astro";
 
-let errors = null;
 
 if (Astro.request.method === 'POST') {
 
@@ -23,10 +22,11 @@ if (Astro.request.method === 'POST') {
     return Astro.redirect('/')
   }
 
+
   authStore.set({ isAuth: false, errors: error, userLogged: null})
 }
 
-console.log(authStore.get())
+const { errors } = authStore.get()
 ---
 
 <Layout page="Login" description="">
@@ -91,7 +91,7 @@ console.log(authStore.get())
 
     <!-- error card -->
 
-    {errors && <ErrorCard error={errors} />}
+    {errors !== null ? <ErrorCard error={errors}/> : null}
   </section>
 </Layout>
 

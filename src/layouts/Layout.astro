@@ -42,6 +42,7 @@ const { page, description } = Astro.props;
     --color_accent: #FFA07A;
     --color_accent_light: #fab093;
     --color_secondary: #C0C0C0;
+    --color_secondary_text: #686868;
 
     --border_size: 0.5em;
     --padding_boxes: 0.8em;
@@ -80,6 +81,12 @@ const { page, description } = Astro.props;
   svg {
     max-width: 100%;
     height: auto;
+  }
+  ul {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
   }
   /* reduce animations if user wants */
   @media (prefers-reduced-motion: reduce) {

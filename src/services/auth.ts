@@ -25,31 +25,5 @@ async function signUp(payload: FormData) {
   }
 }
 
-async function logIn (payload: FormData) {
-  try {
-    const result = await post('auth?type=login', payload)
 
-    if (!result.ok) {
-      authStore.set({ isAuth: false, userLogged: null, errors: result.error })
-      return {
-        hasLogged: false
-      }
-    }
-
-    authStore.set({ isAuth: true, userLogged: result.data, errors: null })
-    
-    return {
-      hasLogged: true,
-      cookie: result.headers?.getSetCookie()[0]
-    }
-
-  }
-  catch (e) {
-    authStore.set({ isAuth: false, userLogged: null, errors: e })
-    return {
-      hasLogged: false
-    }
-  }
-}
-
-export { signUp, logIn }
+export { signUp }
