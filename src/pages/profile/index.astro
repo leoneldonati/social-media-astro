@@ -7,12 +7,20 @@ import {
 } from "@tabler/icons-react";
 import Layout from "../../layouts/Layout.astro";
 import { authStore } from "../../stores/auth";
+import { get } from "../../helpers/fetch";
+import PostCardProfile from "../../components/post-card-profile.astro";
 
 const userLogged = authStore.get().userLogged!;
 
 const avatar = JSON.parse(userLogged.avatar).original.secureUrl as string;
 const createdAt = new Date(userLogged.createdAt).toLocaleDateString("es");
 const userBd = new Date(userLogged.DATE).toLocaleDateString("es");
+
+const headers = new Headers();
+headers.append("Cookie", `session=${Astro.cookies.get("session")?.value}`);
+const { ok, data, error } = await get(`users?id=${userLogged.id}`, { headers });
+
+const posts = ok ? (data.posts as PostProfile[]) : [];
 ---
 
 <Layout page={`@${userLogged.username}`} description={userLogged.bio}>
@@ -54,17 +62,22 @@ const userBd = new Date(userLogged.DATE).toLocaleDateString("es");
       </a>
     </div>
 
-    <hr />
-    <div class="profile__container--posts"></div>
+    <hr style="margin-bottom: 16px;" />
+    <div class="profile__container--posts">
+      {posts.map((post) => <PostCardProfile post={post} />)}
+    </div>
   </section>
 </Layout>
 
 <style>
   .profile {
+    position: relative;
     min-height: 100dvh;
     max-width: var(--max_w);
     margin: 0 auto;
     padding: 6px;
+    display: flex;
+    flex-flow: column;
   }
   .profile__img {
     display: flex;
@@ -79,6 +92,11 @@ const userBd = new Date(userLogged.DATE).toLocaleDateString("es");
   .profile__container {
     position: relative;
     margin: 16px 0;
+  }
+  .profile__container--posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    flex: 1;
   }
   .profile__btn--edit {
     position: absolute;

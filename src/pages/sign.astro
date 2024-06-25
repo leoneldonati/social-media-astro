@@ -1,17 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import AvatarSelector from "../components/avatar-selector";
-import { signUp } from "../services/auth";
 import { authStore } from "../stores/auth";
 
 if (Astro.request.method === "POST") {
   const form = await Astro.request.formData();
 
-  const { hasSigned } = await signUp(form);
+  // const { hasSigned } = await signUp(form);
 
-  if (hasSigned) {
-    return Astro.redirect("/login");
-  }
+  // if (hasSigned) {
+  //   return Astro.redirect("/login");
+  // }
 }
 
 const { errors } = authStore.get();

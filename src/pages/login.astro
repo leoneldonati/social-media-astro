@@ -1,30 +1,33 @@
 ---
-import { post } from "../helpers/fetch";
 import Layout from "../layouts/Layout.astro";
 import { IconBrandGoogle, IconBrandInstagram } from "@tabler/icons-react";
 import { authStore } from "../stores/auth";
 import ErrorCard from "../components/error-card.astro";
 
-if (Astro.request.method === "POST") {
-  const form = await Astro.request.formData();
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData()
+  const res = await fetch(`http://localhost:4321/api/login`, {
+      method: 'post',
+      body: formData
+    })
 
-  const { headers, ok, data, error } = await post("auth?type=login", form);
+  if (res.ok) {
+    const sessionString = res.headers.get('cookie')?.split('=')
 
-  if (ok) {
-    const sessionString = headers
-      ?.get("set-cookie")
-      ?.match(/session=([^;]+);/)![1];
 
-    Astro.cookies.set("session", sessionString!);
+    Astro.cookies.set("session", sessionString![1]);
 
-    authStore.set({ isAuth: true, userLogged: data, errors: null });
+    const data = await res.json()
 
-    return Astro.redirect("/");
+    authStore.set({ isAuth: true, userLogged: data, errors: null })
+    
+    return Astro.redirect("/login");
   }
 
-  authStore.set({ isAuth: false, errors: error, userLogged: null });
-}
+  const error = await res.json()
 
+  authStore.set({ isAuth: false, userLogged: null, errors: error })
+}
 const { errors } = authStore.get();
 ---
 
@@ -92,6 +95,8 @@ const { errors } = authStore.get();
     {errors !== null ? <ErrorCard error={errors} /> : null}
   </section>
 </Layout>
+
+
 
 <style>
   .login {

@@ -12,6 +12,7 @@ interface UserLogged {
   settings: string;
   location: null;
   avatar: string;
+  posts: Post[];
 }
 
 interface Post {
@@ -31,7 +32,4 @@ interface PostProfile {
   userid: string;
   createdAt: string;
   updatedAt: string
-}
-interface UserSelected extends UserLogged {
-  posts: PostProfile[];
 }
