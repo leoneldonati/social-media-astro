@@ -16,7 +16,7 @@ export default function AvatarSelector({ avatar }: { avatar?: string }) {
 
   useEffect(() => {
     if (avatar) setSelectedAvatar(avatar);
-  }, []);
+  }, [avatar]);
   return (
     <label
       htmlFor="avatar"
