@@ -21,7 +21,7 @@ if (Astro.request.method === 'POST') {
 
     authStore.set({ isAuth: true, userLogged: data, errors: null })
     
-    return Astro.redirect("/login");
+    return Astro.redirect("/");
   }
 
   const error = await res.json()

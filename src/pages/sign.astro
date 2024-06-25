@@ -6,6 +6,12 @@ import { authStore } from "../stores/auth";
 if (Astro.request.method === "POST") {
   const form = await Astro.request.formData();
 
+  const res = await fetch('http://localhost:4321/api/sign', {
+    method: 'post',
+    body: form
+  })
+
+  console.log(res)
   // const { hasSigned } = await signUp(form);
 
   // if (hasSigned) {
